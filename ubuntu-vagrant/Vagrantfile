@@ -1,0 +1,30 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  # Define VM 1: server01
+  config.vm.define "server01" do |server01|
+    server01.vm.box = "ubuntu-jammy-server-2204.box"
+    server01.vm.hostname = "server01"
+    server01.vm.network "public_network", bridge: nil  # Bridged network
+
+    server01.vm.provider "virtualbox" do |vm|
+      vm.name = "server01"
+      vm.memory = 4096
+      vm.cpus = 2
+    end
+  end
+
+  # Define VM 2: server02
+  config.vm.define "server02" do |server02|
+    server02.vm.box = "ubuntu-jammy-server-2204.box"
+    server02.vm.hostname = "server02"
+    server02.vm.network "public_network", bridge: nil  # Bridged network
+
+    server02.vm.provider "virtualbox" do |vm|
+      vm.name = "server02"
+      vm.memory = 4096
+      vm.cpus = 2
+    end
+  end
+end
