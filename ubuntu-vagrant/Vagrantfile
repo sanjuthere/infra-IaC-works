@@ -4,13 +4,14 @@
 Vagrant.configure("2") do |config|
   # Define VM 1: server01
   config.vm.define "server01" do |server01|
-    server01.vm.box = "ubuntu-jammy-server-2204.box"
+    server01.vm.box = "ubuntu2204-generic-LTS-image"
     server01.vm.hostname = "server01"
     server01.vm.network "public_network", bridge: nil  # Bridged network
+    server01.vm.provision "shell", path: "./scripts/jenkins.sh"
 
     server01.vm.provider "virtualbox" do |vm|
       vm.name = "server01"
-      vm.memory = 4096
+      vm.memory = 3072
       vm.cpus = 2
     end
   end
@@ -20,10 +21,39 @@ Vagrant.configure("2") do |config|
     server02.vm.box = "ubuntu-jammy-server-2204.box"
     server02.vm.hostname = "server02"
     server02.vm.network "public_network", bridge: nil  # Bridged network
+    server02.vm.provision "shell", path: "./scripts/web-sever.sh"
 
     server02.vm.provider "virtualbox" do |vm|
       vm.name = "server02"
       vm.memory = 4096
+      vm.cpus = 2
+    end
+  end
+
+  # Define VM 1: server03
+  config.vm.define "server03" do |server03|
+    server03.vm.box = "ubuntu2204-generic-LTS-image"
+    server03.vm.hostname = "server03"
+    server03.vm.network "public_network", bridge: nil  # Bridged network
+    server03.vm.provision "shell", path: "./scripts/docker-sonar-nexus.sh"
+
+    server03.vm.provider "virtualbox" do |vm|
+      vm.name = "server03"
+      vm.memory = 4096
+      vm.cpus = 2
+    end
+  end
+
+  # Define VM 1: server04
+  config.vm.define "server04" do |server04|
+    server04.vm.box = "./OS-Image/ubuntu2204-generic-LTS-image"
+    server04.vm.hostname = "server04"
+    server04.vm.network "public_network", bridge: nil  # Bridged network
+    server04.vm.provision "shell", path: "./scripts/kibana-grafana.sh"
+
+    server04.vm.provider "virtualbox" do |vm|
+      vm.name = "server04"
+      vm.memory = 3072
       vm.cpus = 2
     end
   end
