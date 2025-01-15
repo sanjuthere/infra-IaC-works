@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-  # Define VM 1: server01
+  # Define VM 1: server01-JENKINS
   config.vm.define "server01" do |server01|
     server01.vm.box = "./OS-Image/ubuntu2204-generic-LTS-image"
     server01.vm.hostname = "server01"
@@ -11,12 +11,12 @@ Vagrant.configure("2") do |config|
 
     server01.vm.provider "virtualbox" do |vm|
       vm.name = "server01"
-      vm.memory = 3072
+      vm.memory = 4096
       vm.cpus = 2
     end
   end
 
-  # Define VM 2: server02
+  # Define VM 2: server02-ELASTICSERCH-LOGSTASH-PROMOTHEUS-lms-app
   config.vm.define "server02" do |server02|
     server02.vm.box = "./OS-Image/ubuntu-jammy-server-2204.box"
     server02.vm.hostname = "server02"
@@ -25,21 +25,22 @@ Vagrant.configure("2") do |config|
 
     server02.vm.provider "virtualbox" do |vm|
       vm.name = "server02"
-      vm.memory = 4096
+      vm.memory = 5096
       vm.cpus = 2
     end
   end
 
-  # Define VM 1: server03
+  # Define VM 1: server03-SONAR-NEXUS-JFROG
   config.vm.define "server03" do |server03|
     server03.vm.box = "./OS-Image/ubuntu2204-generic-LTS-image"
     server03.vm.hostname = "server03"
     server03.vm.network "public_network", bridge: nil  # Bridged network
     server03.vm.provision "shell", path: "./scripts/docker-sonar-nexus.sh"
+    # server03.vm.provision "shell", path: "./scripts/jfrog.sh" not working
 
     server03.vm.provider "virtualbox" do |vm|
       vm.name = "server03"
-      vm.memory = 4096
+      vm.memory = 3096
       vm.cpus = 2
     end
   end
@@ -53,7 +54,7 @@ Vagrant.configure("2") do |config|
 
     server04.vm.provider "virtualbox" do |vm|
       vm.name = "server04"
-      vm.memory = 3072
+      vm.memory = 4096
       vm.cpus = 2
     end
   end
