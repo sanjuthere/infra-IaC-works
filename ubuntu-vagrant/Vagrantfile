@@ -58,4 +58,17 @@ Vagrant.configure("2") do |config|
       vm.cpus = 2
     end
   end
+
+   # Define VM 1: docker
+   config.vm.define "server05" do |docker|
+    docker.vm.box = "./OS-Image/ubuntu2204-generic-LTS-image"
+    docker.vm.hostname = "docker"
+    docker.vm.network "public_network", bridge: nil  # Bridged network
+
+    docker.vm.provider "virtualbox" do |vm|
+      vm.name = "docker"
+      vm.memory = 2048
+      vm.cpus = 2
+    end
+  end
 end
